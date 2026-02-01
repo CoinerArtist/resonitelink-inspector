@@ -39,6 +39,11 @@
     input{
         width: 20em;
     }
+
+    a{
+        margin-right: 1em;
+        color: var(--heroCyan);
+    }
 </style>
 
 <div>
@@ -46,5 +51,5 @@
     <button onclick={connect}>Connect</button>
     <span id="errorMessage">{errorMessage}</span>
     <span><CheckBox bind:checked={shared.resoniteLinkMode} onclick={saveMode}/> ResoniteLink Info</span>
-    <span id="version">v0.0.1</span>
+    <span id="version"><a href="https://github.com/CoinerArtist/resonitelink-inspector">README.md</a> v0.0.1</span>
 </div>
