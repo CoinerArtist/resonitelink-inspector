@@ -1,0 +1,149 @@
+:root{
+  /* Taken from `PlatformColorPalette` component */
+  /* Neutral */
+  --dark: rgb(7% 8% 11%);
+  --mid: rgb(17% 18% 21%);
+  --midLight: rgb(53% 53% 55%);
+  --light: rgb(88% 88% 88%);
+  /* Hero */
+  --heroYellow: rgb(97% 97% 44%);
+  --heroGreen: rgb(35% 92% 36%);
+  --heroRed: rgb(100% 46% 46%);
+  --heroPurple: rgb(73% 39% 95%);
+  --heroCyan: rgb(38% 82% 98%);
+  --heroOrange: rgb(90% 62% 31%);
+  /* Mid */
+  --midYellow: rgb(63% 63% 31%);
+  --midGreen: rgb(25% 62% 27%);
+  --midRed: rgb(68% 33% 35%);
+  --midPurple: rgb(51% 29% 67%);
+  --midCyan: rgb(27% 56% 67%);
+  --midOrange: rgb(59% 42% 24%);
+  /* Sub */
+  --subYellow: rgb(28% 29% 17%);
+  --subGreen: rgb(14% 32% 17%);
+  --subRed: rgb(36% 20% 23%);
+  --subPurple: rgb(29% 18% 39%);
+  --subCyan: rgb(16% 30% 36%);
+  --subOrange: rgb(28% 22% 16%);
+  /* Dark */
+  --darkYellow: rgb(17% 18% 15%);
+  --darkGreen: rgb(10% 18% 14%);
+  --darkRed: rgb(10% 7% 9%);
+  --darkPurple: rgb(14% 12% 21%);
+  --darkCyan: rgb(10% 16% 21%);
+  --darkOrange: rgb(16% 14% 14%);
+
+  /* Extra */
+  --darkFill: rgb(4% 5% 8%);
+  --midFill: rgb(12% 13% 15%);
+
+  --midHover: rgb(37% 41% 46%);
+  --midFillHover: rgb(28% 30% 34%);
+
+  --midActive: rgb(43% 54% 71%);
+  --midFillActive: rgb(32% 41% 53%);
+
+  --enum: rgb(3% 4% 5%);
+  --enumHover: rgb(7% 8% 10%);
+  --enumActive: rgb(8% 10% 15%);
+}
+
+:root, body{
+  color: var(--light);
+  font-family: "Noto Sans", sans-serif;
+  font-weight: bold;
+
+  margin: 0px;
+  background-color: var(--darkFill);
+  scrollbar-color: rgb(255, 255, 255, 0.2) transparent;
+  scrollbar-width: thin;
+}
+
+input, button, select{
+  color: var(--light);
+  font-family: "Noto Sans", sans-serif;
+  font-weight: bold;
+  text-align: center;
+}
+
+input{
+  flex-grow: 1;
+  padding: 0px;
+  width: 3em;
+
+  background-color: var(--midFill);
+  border: solid 0.3em var(--mid);
+  border-radius: 0.6em;
+}
+input:hover{
+  background-color: var(--midFillHover);
+  border-color: var(--midHover);
+}
+input:active{
+  background-color: var(--midFillActive);
+  border-color: var(--midActive);
+}
+input:focus{
+  outline: none;
+}
+
+button{
+  background-color: var(--mid);
+  border: solid 0.3em var(--mid);
+  border-radius: 0.6em;
+}
+button:hover{
+  background-color: var(--midHover);
+  border-color: var(--midHover);
+}
+button:active{
+  background-color: var(--midActive);
+  border-color: var(--midActive);
+}
+button:focus{
+  outline: none;
+}
+
+input[type=number] {
+  appearance: textfield;
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+
+select{
+  flex-grow: 1;
+  padding: 0px;
+  width: 3em;
+
+  background-color: var(--enum);
+  border: solid 0.3em var(--enum);
+  border-radius: 0.6em;
+}
+select:hover{
+  background-color: var(--enumHover);
+  border-color: var(--enumHover);
+}
+select:active{
+  background-color: var(--enumActive);
+  border-color: var(--enumActive);
+}
+select:focus{
+  outline: none;
+}
+
+.unknownEnum{
+  background-color: var(--enum);
+  border-color: var(--enum);
+}
+.unknownEnum:hover{
+  background-color: var(--enumHover);
+  border-color: var(--enumHover);
+}
+.unknownEnum:active{
+  background-color: var(--enumActive);
+  border-color: var(--enumActive);
+}
