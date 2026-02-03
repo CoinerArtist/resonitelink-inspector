@@ -40,9 +40,17 @@
         width: 20em;
     }
 
-    a{
+    #readme{
         margin-right: 1em;
         color: var(--heroCyan);
+    }
+
+    #changelog{
+        color: var(--light);
+        text-decoration: none;
+    }
+    #changelog:hover{
+        text-decoration: underline;
     }
 </style>
 
@@ -51,5 +59,8 @@
     <button onclick={connect}>Connect</button>
     <span id="errorMessage">{errorMessage}</span>
     <span><CheckBox bind:checked={shared.resoniteLinkMode} onclick={saveMode}/> ResoniteLink Info</span>
-    <span id="version"><a href="https://github.com/CoinerArtist/resonitelink-inspector">README.md</a> v0.0.2</span>
+    <span id="version">
+        <a id="readme" href="https://github.com/CoinerArtist/resonitelink-inspector">README.md</a>
+        <a id="changelog" href="https://github.com/CoinerArtist/resonitelink-inspector/blob/main/changelog.md">v0.0.2</a>
+    </span>
 </div>
