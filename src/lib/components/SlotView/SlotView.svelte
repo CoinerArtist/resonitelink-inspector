@@ -8,7 +8,7 @@
 
     let {data: slot} = $derived((shared.selectedSlot === "" ? {data: null} : await link.getSlot(shared.selectedSlot)))
 
-    async function changeField(name: string, data: Member){
+    async function changeField(name: string|number, data: Member){
         await link.updateSlot({
             id: shared.selectedSlot,
             [name]: data
@@ -16,12 +16,12 @@
         slot = (await link.getSlot(shared.selectedSlot)).data
     }
 
-    async function changeFieldDisplay(name: string, data: Member){
+    async function changeFieldDisplay(name: string|number, data: Member){
         await changeField(name, data)
         tryUpdate(shared.selectedSlot)
     }
 
-    async function changeFieldParent(name: string, data: Member){
+    async function changeFieldParent(name: string|number, data: Member){
         const parentId = slot!.parent.targetId
         await changeField(name, data)
         if(parentId) tryUpdate(parentId)
@@ -66,6 +66,13 @@
         overflow-y: scroll;
         overflow-x: hidden;
         scrollbar-width: thin;
+
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        padding: round(0.3em, 1px);
+        gap: round(0.3em, 1px);
+        font-size: 1.2em;
+        align-items: center;
     }
 </style>
 

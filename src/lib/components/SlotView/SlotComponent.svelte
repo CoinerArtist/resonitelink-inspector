@@ -10,7 +10,7 @@
         if(shared.resoniteLinkMode) console.log(`${shortenType(component.componentType)}(${componentId})`, component)
     }
 
-    function changeField(name: string, data: Member){
+    function changeField(name: string|number, data: Member){
         link.updateComponent({
             id: componentId,
             members: {
@@ -29,16 +29,15 @@
 </script>
 
 <style>
-    #outer{
-        margin-top: 1em;
-    }
-
     #title{
         color: var(--heroYellow);
         text-align: center;
         background-color: var(--mid);
         border-radius: 0.4em;
-        font-size: 1.5em;
+        font-size: 1.25em;
+
+        grid-column: 1 / 3;
+        margin-top: 0.5em;
     }
     #title:hover{
         background-color: var(--midHover);
@@ -52,13 +51,11 @@
     }
 </style>
 
-<div id="outer">
-    <div id="title" {onclick}>
-        {shortenType(component.componentType)}
-        {#if shared.resoniteLinkMode}<span id="info">({component.id})</span>{/if}
-    </div>
-    
-    {#each Object.entries(component.members || {}) as [k,v] (v.id)}
-        <MemberInput name={k} data={v} {changeField} {update}/>
-    {/each}
+<div id="title" {onclick}>
+    {shortenType(component.componentType)}
+    {#if shared.resoniteLinkMode}<span id="info">({component.id})</span>{/if}
 </div>
+
+{#each Object.entries(component.members || {}) as [k,v] (v.id)}
+    <MemberInput name={k} data={v} {changeField} {update}/>
+{/each}

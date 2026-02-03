@@ -3,7 +3,9 @@
     import FieldInput from "./FieldInput.svelte";
     import { shared } from "../../shared.svelte";
     import Reference from "./Reference.svelte";
-    const { name, displayName = "", data, changeField, update }: { name: string, displayName?: string, data: Member, changeField: (name: string, data: Member) => void, update: () => void } = $props()
+    import SyncList from "./SyncList.svelte";
+    import SyncObject from "./SyncObject.svelte";
+    const { name, displayName = "", data, changeField, update }: { name: string|number, displayName?: string, data: Member, changeField: (name: string|number, data: Member) => void, update: () => void } = $props()
 
     function change(dat: Member){
         changeField(name, dat)
@@ -16,14 +18,6 @@
 </script>
 
 <style>
-    #outer{
-        display: grid;
-        grid-template-columns: 1fr 3fr;
-        margin: round(0.3em, 1px);
-        gap: 0.3em;
-        font-size: 1.2em;
-    }
-
     #field{
         display: flex;
         gap: 0.3em;
@@ -52,19 +46,22 @@
     }
 </style>
 
-<div id="outer">
+{#if data.$type === "list"}
+    <span style="grid-column: 1 / 3; text-align: center;" id="title" {onclick}>{displayName || name} {#if shared.resoniteLinkMode}<span id="info">({data.id})</span>{/if} (list):</span>
+    <span style="grid-column: 1 / 3;">
+        <SyncList {data} changeField={change} {update}/>
+    </span>
+{:else}
     <span id="title" {onclick}>{displayName || name}{#if shared.resoniteLinkMode}<span id="info">({data.id})</span>{/if}:</span>
     <span id="field">
         {#if data.$type === "empty"}
             <span class="type">&lt;empty element&gt;</span>
         {:else if data.$type === "reference"}
             <Reference {data} changeField={change} />
-        {:else if data.$type === "list"}
-            <span class="type">&lt;List (Count: {data.elements.length})&gt;</span>
         {:else if data.$type === "syncObject"}
-            <span class="type">&lt;Object&gt;</span>
+            <SyncObject {data} changeField={change} {update}/>
         {:else}
             <FieldInput {data} changeField={change}/>
         {/if}
     </span>
-</div>
+{/if}

@@ -25,6 +25,10 @@
             case "boolean": return false
             case "string": return ""
 
+            case "boolean2":
+            case "boolean3":
+            case "boolean4": return {x: false, y: false, z: false, w: false}
+
             default: return {} as Field["value"]
         }
     }
