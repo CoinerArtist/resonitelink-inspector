@@ -16,7 +16,8 @@ const config = {
 		}),
 		paths: {
 			relative: true
-		}
+		},
+		appDir: "app"
 	},
 
 	compilerOptions: {
