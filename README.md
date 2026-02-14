@@ -20,3 +20,10 @@ This is made using [ResoniteLinkTS](https://github.com/CoinerArtist/ResoniteLink
 - The ResoniteLink Info checkbox allows you to see the ResoniteLink id of slots/components/fields. <br>
 It also makes clicking on the name of a slot/component/field print its ResoniteLink data in the console. (`CTRL+SHIFT+K` on Firefox)
 
+## Run locally
+
+```bash
+pnpm dev
+```
+
+I use [pnpm](https://pnpm.io/installation), but you might be able to use another package manager if it supports `jsr:` dependencies in `package.json`.

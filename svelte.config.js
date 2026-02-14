@@ -1,16 +1,27 @@
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
+import adapter from '@sveltejs/adapter-static';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-/** @type {import("@sveltejs/vite-plugin-svelte").SvelteConfig} */
-export default {
-    // Consult https://svelte.dev/docs#compile-time-svelte-preprocess
-    // for more information about preprocessors
-    preprocess: vitePreprocess(),
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+	// Consult https://svelte.dev/docs/kit/integrations
+	// for more information about preprocessors
+	preprocess: vitePreprocess(),
 
-    compilerOptions:{
-        runes: true,
-        experimental: {
-        async: true
-        },
+	kit: {
+		// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
+		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
+		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
+		adapter: adapter({
+			pages: "docs"
+		}),
+		paths: {
+			relative: true
+		}
+	},
+
+	compilerOptions: {
+		runes: true,
+		experimental: { async: true },
         warningFilter: (warning) => {
             const ignore = [
                 'a11y_media_has_caption',
@@ -23,5 +34,7 @@ export default {
             ]
             return !ignore.includes(warning.code)
         },
-    }
-}
+	}
+};
+
+export default config;

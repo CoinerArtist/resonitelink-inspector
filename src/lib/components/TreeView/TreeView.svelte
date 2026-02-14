@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { link, shared } from "../../shared.svelte";
+    import { link, shared } from "$lib/shared.svelte";
     import TreeElement from "./TreeElement.svelte";
     const { slotId = "Root" }: { slotId?: string} = $props()
 

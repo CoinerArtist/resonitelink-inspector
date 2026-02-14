@@ -1,24 +1,24 @@
 {
-  "name": "resonitelink-inspector",
-  "private": true,
-  "version": "0.0.2",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
-  },
-  "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^6.2.1",
-    "@tsconfig/svelte": "^5.0.6",
-    "@types/node": "^24.10.1",
-    "svelte": "^5.43.8",
-    "svelte-check": "^4.3.4",
-    "typescript": "~5.9.3",
-    "vite": "^7.2.4"
-  },
-  "dependencies": {
-    "@coin/resonitelink-ts": "jsr:^1.0.3"
-  }
+	"name": "resonitelink-inspector",
+	"version": "0.0.3",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "pnpm build && vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-static": "^3.0.10",
+		"@sveltejs/kit": "^2.51.0",
+		"@sveltejs/vite-plugin-svelte": "6.2.4",
+		"svelte": "^5.51.0",
+		"svelte-check": "^4.4.0",
+		"typescript": "^5.9.3",
+		"vite": "^7.3.1"
+	},
+	"dependencies": {
+		"@coin/resonitelink-ts": "jsr:^1.0.5"
+	}
 }

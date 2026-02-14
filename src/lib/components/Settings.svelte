@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { link, shared } from "../shared.svelte";
+    import { link, shared } from "$lib/shared.svelte";
     import CheckBox from "./CheckBox.svelte";
 
     let url = $state(localStorage.getItem("ResoniteLinkUrl") || "ws://localhost:PORT")
@@ -61,6 +61,6 @@
     <span><CheckBox bind:checked={shared.resoniteLinkMode} onclick={saveMode}/> ResoniteLink Info</span>
     <span id="version">
         <a id="readme" href="https://github.com/CoinerArtist/resonitelink-inspector">README.md</a>
-        <a id="changelog" href="https://github.com/CoinerArtist/resonitelink-inspector/blob/main/changelog.md">v0.0.2</a>
+        <a id="changelog" href="https://github.com/CoinerArtist/resonitelink-inspector/blob/main/changelog.md">v0.0.3</a>
     </span>
 </div>

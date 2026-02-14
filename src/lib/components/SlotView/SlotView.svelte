@@ -1,10 +1,12 @@
 <script lang="ts">
     import type { Member } from "@coin/resonitelink-ts";
-    import { link, shared } from "../../shared.svelte";
-    import MemberInput from "./MemberInput.svelte";
+    import { link, shared } from "$lib/shared.svelte";
+    import MemberInput from "./MemberInput/MemberInput.svelte";
     import SlotComponent from "./SlotComponent.svelte";
-    import { tryUpdate } from "../../util";
+    import { tryUpdate } from "$lib/util";
     import { onDestroy, onMount } from "svelte";
+
+    // import imgDestroy from "../../../assets/icon/Color_Destroy.svg"
 
     let {data: slot} = $derived((shared.selectedSlot === "" ? {data: null} : await link.getSlot(shared.selectedSlot)))
 
@@ -59,6 +61,7 @@
     #title{
         font-size: 1.8em;
         margin-bottom: 0.1em;
+        flex-grow: 1;
     }
 
     #content{
@@ -73,11 +76,19 @@
         gap: round(0.3em, 1px);
         font-size: 1.2em;
         align-items: center;
+        align-content: flex-start;
+    }
+
+    #topbar{
+        display: flex;
     }
 </style>
 
 <div id="outer">
-    <div id="title">Slot: {slot ? slot.name.value : ""} {#if slot && shared.resoniteLinkMode}<span id="info">({shared.selectedSlot})</span>{/if}</div>
+    <div id="topbar">
+        <div id="title">Slot: {slot ? slot.name.value : ""} {#if slot && shared.resoniteLinkMode}<span id="info">({shared.selectedSlot})</span>{/if}</div>
+        <!-- <button><img src={imgDestroy} alt="Destroy"></button> -->
+    </div>
     <div id="content">
         {#if slot}
             <MemberInput displayName="Name" name="name" data={{...slot.name, $type: "string"}} changeField={changeFieldDisplay} {update}/>

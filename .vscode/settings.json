@@ -1,0 +1,8 @@
+{
+    "files.exclude": {
+        "node_modules": true,
+        ".svelte-kit": true,
+        ".vite": true,
+        "pnpm-lock.yaml": true
+    }
+}
