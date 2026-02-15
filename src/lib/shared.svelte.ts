@@ -6,7 +6,7 @@ export const shared = $state({
 
     rootSlotId: "Root",
 
-    selectedSlot: "",
+    selectedSlot: null as string|null,
     slotUpdate: new Map<string, () => void>(),
 
     componentUpdate: () => {},

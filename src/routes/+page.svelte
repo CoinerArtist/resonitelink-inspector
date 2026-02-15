@@ -23,7 +23,7 @@
     <Settings />
     <div id="inspector">
         <div style="height: 100%;"><TreeView slotId={shared.rootSlotId}/></div>
-        <div style="height: 100%;"><SlotView /></div>
+        <div style="height: 100%;"><SlotView slotId={shared.selectedSlot} /></div>
     </div>
     
     <MouseNotification />

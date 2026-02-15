@@ -1,5 +1,8 @@
 # changelog
 
+## v0.0.5
+- ...
+
 ## v0.0.4
 - Inspector buttons (Object Root, Destroy Preserving Assets, Duplicate, Create Pivot At Center, and user dependant buttons dont actually work)
 - Mouse notification (mostly for telling you that a button doesnt work)

@@ -1,10 +1,11 @@
 <script lang="ts">
-    import type { Member } from "@coin/resonitelink-ts";
+    import type { Member, Slot } from "@coin/resonitelink-ts";
     import { link, shared } from "$shared";
     import { tryUpdate } from "$util";
     import MemberInput from "./MemberInput/MemberInput.svelte";
     import SlotComponent from "./SlotComponent.svelte";
     import { onDestroy, onMount } from "svelte";
+    let { slotId = null }: { slotId?: string|null} = $props()
 
     import imgDestroy from "$assets/icon/Color_Destroy.svg"
     import imgDestroyPreservingAssets from "$assets/icon/Color_DestroyPreservingAssets.svg"
@@ -13,31 +14,50 @@
     import imgDuplicate from "$assets/icon/Color_Duplicate.svg"
     import imgSetRoot from "$assets/icon/Color_SetRoot.svg"
 
-    let {data: slot} = $derived((shared.selectedSlot === "" ? {data: null} : await link.getSlot(shared.selectedSlot)))
+    let slot: Slot|null = $state(null)
+
+    $effect(() => {
+        if(shared.linkOpen && slotId){
+            link.getSlot(slotId).then(x => {
+                slot = x.data
+            }).catch(() => {
+                slotId = null
+                slot = null
+                shared.sendNotification("Couldn't get selected slot.")
+            })
+        }
+    })
+
+    async function update(){
+        if(slotId){
+            slot = (await link.getSlot(slotId)).data
+        }
+    }
 
     async function changeField(name: string|number, data: Member){
-        await link.updateSlot({
-            id: shared.selectedSlot,
-            [name]: data
-        })
-        slot = (await link.getSlot(shared.selectedSlot)).data
+        if(slot){
+            await link.updateSlot({
+                id: slot.id,
+                [name]: data
+            })
+            update()
+        }
     }
 
     async function changeFieldDisplay(name: string|number, data: Member){
-        await changeField(name, data)
-        tryUpdate(shared.selectedSlot)
+        if(slot){
+            await changeField(name, data)
+            tryUpdate(slot.id)
+        }
     }
 
     async function changeFieldParent(name: string|number, data: Member){
-        const parentId = slot!.parent.targetId
-        await changeField(name, data)
-        if(parentId) tryUpdate(parentId)
-        if(slot!.parent.targetId) tryUpdate(slot!.parent.targetId)
-        console.log(parentId)
-    }
-
-    async function update(){
-        slot = (await link.getSlot(shared.selectedSlot)).data
+        if(slot){
+            const parentId = slot!.parent.targetId
+            await changeField(name, data)
+            if(parentId) tryUpdate(parentId)
+            if(slot!.parent.targetId) tryUpdate(slot!.parent.targetId)
+        }
     }
 
     onMount(() => {
@@ -113,7 +133,9 @@
     }
 
     function setRoot(){
-        shared.rootSlotId = shared.selectedSlot
+        if(slot){
+            shared.rootSlotId = slot.id
+        }
     }
 
     async function resetPosition(){
@@ -230,7 +252,7 @@
 
 <div id="outer">
     <div id="topbar">
-        <div id="title">Slot: {slot ? slot.name.value : ""} {#if slot && shared.resoniteLinkMode}<span id="info">({shared.selectedSlot})</span>{/if}</div>
+        <div id="title">Slot: {slot ? slot.name.value : ""} {#if slot && shared.resoniteLinkMode}<span id="info">({slot.id})</span>{/if}</div>
         <button onclick={destroy}><img src={imgDestroy} title="Destroy"></button>
         <button onclick={todo}><img src={imgDestroyPreservingAssets} title="Destroy Preserving Assets"></button>
         <button onclick={insertParent}><img src={imgInsertParent} title="Insert Parent"></button>
