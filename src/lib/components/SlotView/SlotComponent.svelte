@@ -3,11 +3,16 @@
     import { link, shared } from "$shared";
     import MemberInput from "./MemberInput/MemberInput.svelte";
     import { shortenType } from "$util";
+    import { components, updateComponent } from "$model";
     const { componentId }: { componentId: string } = $props()
 
+    // svelte-ignore state_referenced_locally
+    await updateComponent(componentId)
+    let component = $derived(components.get(componentId))
+
     async function onclick(){
-        component = (await link.getComponent(componentId)).data
-        if(shared.resoniteLinkMode) console.log(`${shortenType(component.componentType)}(${componentId})`, component)
+        await updateComponent(componentId)
+        if(shared.resoniteLinkMode && component) console.log(`${shortenType(component.componentType)}(${componentId})`, component)
     }
 
     function changeField(name: string|number, data: Member){
@@ -17,15 +22,13 @@
                 [name]: data
             }
         }).finally(async () => {
-            component = (await link.getComponent(componentId)).data
+            updateComponent(componentId)
         })
     }
 
     async function update(){
-        component = (await link.getComponent(componentId)).data
+        await updateComponent(componentId)
     }
-
-    let {data: component} = $derived(await link.getComponent(componentId))
 </script>
 
 <style>
@@ -51,11 +54,13 @@
     }
 </style>
 
-<div id="title" {onclick}>
-    {shortenType(component.componentType)}
-    {#if shared.resoniteLinkMode}<span id="info">({component.id})</span>{/if}
-</div>
+{#if component}
+    <div id="title" {onclick}>
+        {shortenType(component.componentType)}
+        {#if shared.resoniteLinkMode}<span id="info">({component.id})</span>{/if}
+    </div>
 
-{#each Object.entries(component.members || {}) as [k,v] (v.id)}
-    <MemberInput name={k} data={v} {changeField} {update}/>
-{/each}
+    {#each Object.entries(component.members || {}) as [k,v] (v.id)}
+        <MemberInput name={k} data={v} {changeField} {update}/>
+    {/each}
+{/if}

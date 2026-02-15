@@ -5,11 +5,8 @@ export const shared = $state({
     resoniteLinkMode: false,
 
     rootSlotId: "Root",
-
     selectedSlot: null as string|null,
-    slotUpdate: new Map<string, () => void>(),
 
-    componentUpdate: () => {},
     sendNotification: (() => {}) as (text: string, cssColor?: string) => void
 })
 

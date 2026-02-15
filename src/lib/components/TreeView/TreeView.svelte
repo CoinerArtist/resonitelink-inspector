@@ -1,27 +1,26 @@
 <script lang="ts">
-    import { link, shared } from "$lib/shared.svelte";
+    import { shared } from "$lib/shared.svelte";
     import TreeElement from "./TreeElement.svelte";
-    let { slotId = "Root" }: { slotId?: string} = $props()
+    import type { Slot } from "@coin/resonitelink-ts";
+    import { slots, updateSlot } from "$model";
+    let { slotId = $bindable("Root") }: { slotId?: string } = $props()
 
     import imgObjectRoot from "$assets/icon/Color_ObjectRoot.svg"
     import imgRootUp from "$assets/icon/Color_RootUp.svg"
-    import type { Slot } from "@coin/resonitelink-ts";
 
-    let name = $state("")
-    let slot: Slot|null = $state(null)
+    let slot: Slot|undefined|null = $derived(slots.get(slotId))
+    let name = $derived(slot ? slot.name.value : "")
     
     $effect(() => {
         if(shared.linkOpen){
-            link.getSlot(slotId).then(x => {
-                name = x.data.name.value || ""
-                slot = x.data
-            }).catch(() => {
-                slotId = "Root"
-                slot = null
-                shared.sendNotification("Couldn't get inspector root slot. Resetting to world Root.")
-            })
-        } else {
-            name = ""
+            updateSlot(slotId)
+        }
+    })
+
+    $effect(() => {
+        if(slot === null){
+            if(shared.selectedSlot !== slotId) shared.sendNotification("Couldn't get inspector root slot. Resetting to world Root...")    // If this is called by two different effects at the same time, it somehow causes a loop
+            slotId = "Root"
         }
     })
 
@@ -88,7 +87,7 @@
     </div>
 
     <div id="content">
-        {#if shared.linkOpen}
+        {#if shared.linkOpen && slot}
             <TreeElement {slotId} unfolded={true}/>
         {/if}
     </div>

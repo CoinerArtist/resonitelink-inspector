@@ -58,6 +58,8 @@
   background-color: var(--darkFill);
   scrollbar-color: rgb(255, 255, 255, 0.2) transparent;
   scrollbar-width: thin;
+
+  height: 100%;
 }
 
 input, button, select{

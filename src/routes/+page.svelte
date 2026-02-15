@@ -8,13 +8,20 @@
 </script>
 
 <style>
+    #outer{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
     #inspector {
         display: grid;
         grid-template-columns: 2fr 3fr;
         grid-template-rows: 100%;
-        height: 100vh;
         padding: 8px;
         box-sizing: border-box;
+        flex-grow: 1;
+        min-height: 0;
     }
 </style>
 
@@ -22,8 +29,8 @@
 <div id="outer">
     <Settings />
     <div id="inspector">
-        <div style="height: 100%;"><TreeView slotId={shared.rootSlotId}/></div>
-        <div style="height: 100%;"><SlotView slotId={shared.selectedSlot} /></div>
+        <div style="height: 100%;"><TreeView bind:slotId={shared.rootSlotId}/></div>
+        <div style="height: 100%;"><SlotView bind:slotId={shared.selectedSlot} /></div>
     </div>
     
     <MouseNotification />

@@ -21,6 +21,7 @@ const config = {
 		alias: {
 			"$shared": "src/lib/shared.svelte.ts",
 			"$util": "src/lib/util.ts",
+			"$model": "src/lib/model.svelte.ts",
 			"$assets": "src/lib/assets",
 			"$components": "src/lib/components"
 		}
