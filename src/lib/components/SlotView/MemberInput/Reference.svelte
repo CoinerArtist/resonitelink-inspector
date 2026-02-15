@@ -1,6 +1,6 @@
 <script lang="ts">
     import type {Member, Reference} from "@coin/resonitelink-ts"
-    import { shortenType } from "$lib/util";
+    import { shortenType } from "$util";
     const { data, changeField }: { data: Reference, changeField: (data: Member) => void } = $props()
 
     const localData = $derived({...data})

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import {getPrimitiveType, getTsTypeFromResoniteType, type Field, type number2} from "@coin/resonitelink-ts"
+    import {getPrimitiveType, getTsTypeFromResoniteType, type Field} from "@coin/resonitelink-ts"
     import FieldInput from "../FieldInput.svelte";
-    import CheckBox from "$lib/components/CheckBox.svelte";
+    import CheckBox from "$components/CheckBox.svelte";
     const { data, changeField }: { data: Field, changeField: (data: Field) => void } = $props()
 
     const localData = $derived({...data})

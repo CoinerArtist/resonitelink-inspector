@@ -4,15 +4,22 @@ export const shared = $state({
     linkOpen: false,
     resoniteLinkMode: false,
 
+    rootSlotId: "Root",
+
     selectedSlot: "",
     slotUpdate: new Map<string, () => void>(),
 
-    componentUpdate: () => {}
+    componentUpdate: () => {},
+    sendNotification: (() => {}) as (text: string, cssColor?: string) => void
 })
 
 export const link = new ResoniteLinkClient()
 
-link.addEventListener("open", () => shared.linkOpen = true)
+link.addEventListener("open", async () => {
+        await link.requestSessionData()
+        shared.linkOpen = true
+    }
+)
 link.addEventListener("close", () => {
     shared.linkOpen = false
     shared.selectedSlot = ""

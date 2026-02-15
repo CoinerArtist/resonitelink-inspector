@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
-    import { link, shared } from "$lib/shared.svelte";
-    import CheckBox from "$lib/components/CheckBox.svelte";
+    import { link, shared } from "$shared";
+    import CheckBox from "$components/CheckBox.svelte";
     import TreeElement from "./TreeElement.svelte"
     let { slotId, unfolded = false, persistent = true, active = true }: { slotId: string, unfolded?: boolean, persistent?: boolean, active?: boolean } = $props()
 
@@ -45,6 +45,10 @@
 
     // svelte-ignore state_referenced_locally
     let slot = $state.raw((await link.getSlot(slotId)).data)
+
+    $effect(() => {
+        link.getSlot(slotId).then(x => slot = x.data)
+    })
 
     onDestroy(() => {
         shared.slotUpdate.delete(slotId)

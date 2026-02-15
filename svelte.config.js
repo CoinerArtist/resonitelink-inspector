@@ -17,7 +17,13 @@ const config = {
 		paths: {
 			relative: true
 		},
-		appDir: "app"
+		appDir: "app",
+		alias: {
+			"$shared": "src/lib/shared.svelte.ts",
+			"$util": "src/lib/util.ts",
+			"$assets": "src/lib/assets",
+			"$components": "src/lib/components"
+		}
 	},
 
 	compilerOptions: {
@@ -32,6 +38,7 @@ const config = {
                 'a11y_click_events_have_key_events',
                 'a11y_no_static_element_interactions',
                 'a11y_no_noninteractive_element_interactions',
+				'a11y_missing_attribute'
             ]
             return !ignore.includes(warning.code)
         },

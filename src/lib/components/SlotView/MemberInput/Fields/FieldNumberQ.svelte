@@ -1,6 +1,6 @@
 <script lang="ts">
     import type {Field, FieldGeneric, numberQ} from "@coin/resonitelink-ts"
-    import { roundTo } from "$lib/util";
+    import { roundTo } from "$util";
     const { data, changeField }: { data: FieldGeneric<string, numberQ>, changeField: (data: Field) => void } = $props()
 
     const localData = $derived({...data})

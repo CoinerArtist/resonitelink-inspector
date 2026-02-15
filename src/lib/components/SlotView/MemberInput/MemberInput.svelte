@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Member } from "@coin/resonitelink-ts";
+    import { shared } from "$shared";
     import FieldInput from "./FieldInput.svelte";
-    import { shared } from "$lib/shared.svelte";
     import Reference from "./Reference.svelte";
     import SyncList from "./SyncList.svelte";
     import SyncObject from "./SyncObject.svelte";

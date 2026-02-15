@@ -1,6 +1,6 @@
 <script lang="ts">
     import type {Field, FieldGeneric} from "@coin/resonitelink-ts"
-    import CheckBox from "$lib/components/CheckBox.svelte";
+    import CheckBox from "$components/CheckBox.svelte";
     const { data, changeField }: { data: FieldGeneric<string, boolean>, changeField: (data: Field) => void } = $props()
 
     const localData = $derived({...data})

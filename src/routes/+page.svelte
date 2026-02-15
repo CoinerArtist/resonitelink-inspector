@@ -1,8 +1,10 @@
 <script lang="ts">
     import "../app.css"
-    import Settings from "$lib/components/Settings.svelte";
-    import TreeView from "$lib/components/TreeView/TreeView.svelte";
-    import SlotView from "$lib/components/SlotView/SlotView.svelte";
+    import { shared } from "$shared";
+    import Settings from "$components/Settings.svelte";
+    import TreeView from "$components/TreeView/TreeView.svelte";
+    import SlotView from "$components/SlotView/SlotView.svelte";
+    import MouseNotification from "$components/MouseNotification.svelte";
 </script>
 
 <style>
@@ -20,7 +22,9 @@
 <div id="outer">
     <Settings />
     <div id="inspector">
-        <div style="height: 100%;"><TreeView /></div>
+        <div style="height: 100%;"><TreeView slotId={shared.rootSlotId}/></div>
         <div style="height: 100%;"><SlotView /></div>
     </div>
+    
+    <MouseNotification />
 </div>

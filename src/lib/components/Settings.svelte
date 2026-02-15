@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { link, shared } from "$lib/shared.svelte";
-    import CheckBox from "./CheckBox.svelte";
+    import { link, shared } from "$shared";
+    import CheckBox from "$components/CheckBox.svelte";
 
     let url = $state(localStorage.getItem("ResoniteLinkUrl") || "ws://localhost:PORT")
     function saveUrl(){ localStorage.setItem("ResoniteLinkUrl", url) }
@@ -8,22 +8,15 @@
     shared.resoniteLinkMode = JSON.parse(localStorage.getItem("ResoniteLinkMode") || "false")
     function saveMode(){ localStorage.setItem("ResoniteLinkMode", JSON.stringify(shared.resoniteLinkMode)) }
 
-    let errorMessage = $state("")
-
     function connect(){
         link.connect(url).catch(() => {
-            errorMessage = `Failed to connect to "${url}".`
-            setTimeout(() => errorMessage = "", 2000)
+            shared.sendNotification(`Failed to connect to "${url}"`)
         })
     }
 
 </script>
 
-<style>
-    #errorMessage{
-        color: var(--heroRed);
-    }
-    
+<style>    
     div{
         display: flex;
         align-items: center;
@@ -57,10 +50,9 @@
 <div>
     <span><input placeholder="url" onkeyup={saveUrl} bind:value={url}></span>
     <button onclick={connect}>Connect</button>
-    <span id="errorMessage">{errorMessage}</span>
     <span><CheckBox bind:checked={shared.resoniteLinkMode} onclick={saveMode}/> ResoniteLink Info</span>
     <span id="version">
         <a id="readme" href="https://github.com/CoinerArtist/resonitelink-inspector">README.md</a>
-        <a id="changelog" href="https://github.com/CoinerArtist/resonitelink-inspector/blob/main/changelog.md">v0.0.3</a>
+        <a id="changelog" href="https://github.com/CoinerArtist/resonitelink-inspector/blob/main/changelog.md">v0.0.4</a>
     </span>
 </div>

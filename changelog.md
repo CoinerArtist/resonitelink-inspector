@@ -1,5 +1,10 @@
 # changelog
 
+## v0.0.4
+- Inspector buttons (Object Root, Destroy Preserving Assets, Duplicate, Create Pivot At Center, and user dependant buttons dont actually work)
+- Mouse notification (mostly for telling you that a button doesnt work)
+- Added RectField
+
 ## v0.0.3
 - Added TypeField
 - Fix: Fixed the SlotView content spreading to fill it

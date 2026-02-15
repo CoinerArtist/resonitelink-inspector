@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { Member } from "@coin/resonitelink-ts";
-    import { link, shared } from "$lib/shared.svelte";
+    import { link, shared } from "$shared";
     import MemberInput from "./MemberInput/MemberInput.svelte";
-    import { shortenType } from "$lib/util";
+    import { shortenType } from "$util";
     const { componentId }: { componentId: string } = $props()
 
     async function onclick(){
