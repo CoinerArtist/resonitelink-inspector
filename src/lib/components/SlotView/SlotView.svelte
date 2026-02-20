@@ -239,12 +239,22 @@
         text-align: center;
     }
 
-
+    #name{
+        color: var(--currentColor);
+        -webkit-user-select:none; user-select:none;
+        flex-grow: 1;
+    }
+    #name:hover{
+        color: var(--heroYellow);
+    }
+    #name:active{
+        color: var(--heroPurple);
+    }
 </style>
 
 <div id="outer">
     <div id="topbar">
-        <div id="title">Slot: {slot ? slot.name.value : ""} {#if slot && shared.resoniteLinkMode}<span id="info">({slot.id})</span>{/if}</div>
+        <div id="title">Slot: <span id="name" onclick={update}>{slot ? slot.name.value : ""}</span> {#if slot && shared.resoniteLinkMode}<span id="info">({slot.id})</span>{/if}</div>
         <button onclick={destroy}><img src={imgDestroy} title="Destroy"></button>
         <button onclick={todo}><img src={imgDestroyPreservingAssets} title="Destroy Preserving Assets"></button>
         <button onclick={insertParent}><img src={imgInsertParent} title="Insert Parent"></button>

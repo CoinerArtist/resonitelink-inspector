@@ -1,7 +1,10 @@
 # changelog
 
 ## v0.0.5
-- ...
+- All enums should now use a dropdown menu. Their options are found using the Reflection API.
+- Added BoundingBox and color32 fields.
+- Nullable enums can be now be reenabled.
+- The selected slot name is now clickable to update it without having to scroll to the top.
 
 ## v0.0.4
 - Inspector buttons (Object Root, Destroy Preserving Assets, Duplicate, Create Pivot At Center, and user dependant buttons dont actually work)

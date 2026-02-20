@@ -33,6 +33,10 @@
             slotId = slot.parent.targetId
         }
     }
+
+    function update(){
+        updateSlot(slotId)
+    }
 </script>
 
 <style>
@@ -77,11 +81,23 @@
         border-top: 0px;
         border-bottom: 0px;
     }
+
+    #name{
+        color: var(--currentColor);
+        -webkit-user-select:none; user-select:none;
+        flex-grow: 1;
+    }
+    #name:hover{
+        color: var(--heroYellow);
+    }
+    #name:active{
+        color: var(--heroPurple);
+    }
 </style>
 
 <div id="outer">
     <div id="topbar">
-        <div id="title">Root: {name} {#if shared.resoniteLinkMode}<span id="info">({slotId})</span>{/if}</div>
+        <div id="title">Root: <span id="name" onclick={update}>{name}</span> {#if shared.resoniteLinkMode}<span id="info">({slotId})</span>{/if}</div>
         <button onclick={todo}><img src={imgObjectRoot} title="Object Root"></button>
         <button onclick={rootUp}><img src={imgRootUp} title="Root Up"></button>
     </div>

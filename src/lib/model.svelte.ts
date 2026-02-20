@@ -1,5 +1,5 @@
 import { link } from "$shared";
-import type { Component, ComponentDefinition, EnumDefinition, MemberDefinition, Slot, SlotData, TypeReference } from "@coin/resonitelink-ts";
+import type { Component, ComponentDefinition, MemberDefinition, Slot, SlotData, TypeReference } from "@coin/resonitelink-ts";
 import { SvelteMap } from "svelte/reactivity"
 
 // --- //
