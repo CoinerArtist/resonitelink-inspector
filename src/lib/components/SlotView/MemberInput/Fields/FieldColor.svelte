@@ -4,6 +4,10 @@
 
     const localData = $derived({...data})
 
+    function toPercent(val: number){
+        return localData.$type === "color32" ? val*100/255 : val*100
+    }
+
     function onchange(){
         changeField(localData as Field)
     }
@@ -32,8 +36,8 @@ G <input type="number" bind:value={localData.value.g} {onchange}>
 B <input type="number" bind:value={localData.value.b} {onchange}>
 A <input type="number" bind:value={localData.value.a} {onchange}>
 <span id="outer">
-    <span style="background-color: rgb({localData.value.r*100}% {localData.value.g*100}% {localData.value.b*100}%)"></span>
+    <span style="background-color: rgb({toPercent(localData.value.r)}% {toPercent(localData.value.g)}% {toPercent(localData.value.b)}%)"></span>
     <span id="transparentbg">
-        <span id="transparent" style="background-color: rgb({localData.value.r*100}% {localData.value.g*100}% {localData.value.b*100}% / {localData.value.a*100}%)"></span>
+        <span id="transparent" style="background-color: rgb({toPercent(localData.value.r)}% {toPercent(localData.value.g)}% {toPercent(localData.value.b)}% / {toPercent(localData.value.a)}%)"></span>
     </span>
 </span>
