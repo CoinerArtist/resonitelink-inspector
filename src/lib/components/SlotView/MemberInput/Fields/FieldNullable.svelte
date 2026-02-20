@@ -25,9 +25,12 @@
             case "boolean": return false
             case "string": return ""
 
-            case "boolean2":
-            case "boolean3":
+            case "boolean2": return {x: false, y: false}
+            case "boolean3": return {x: false, y: false, z: false}
             case "boolean4": return {x: false, y: false, z: false, w: false}
+
+            case "Rect": return {position: {x: 0, y: 0}, size: {x: 0, y: 0}}
+            case "BoundingBox": return {min: {x: 0, y: 0, z: 0}, max: {x: 0, y: 0, z: 0}}
 
             default: return {} as Field["value"]
         }
