@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type {Field, FieldGeneric, rect} from "@coin/resonitelink-ts"
-    const { data, changeField }: { data: FieldGeneric<string, rect>, changeField: (data: Field) => void } = $props()
+    import type {Field, FieldGeneric, Rect} from "@coin/resonitelink-ts"
+    const { data, changeField }: { data: FieldGeneric<string, Rect>, changeField: (data: Field) => void } = $props()
 
     const localData = $derived({...data})
 
