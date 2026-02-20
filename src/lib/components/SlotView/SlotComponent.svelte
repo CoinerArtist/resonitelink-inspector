@@ -3,12 +3,17 @@
     import { link, shared } from "$shared";
     import MemberInput from "./MemberInput/MemberInput.svelte";
     import { shortenType } from "$util";
-    import { components, updateComponent } from "$model";
+    import { components, exploreType, updateComponent } from "$model";
     const { componentId }: { componentId: string } = $props()
 
     // svelte-ignore state_referenced_locally
     await updateComponent(componentId)
     let component = $derived(components.get(componentId))
+
+    // svelte-ignore state_referenced_locally
+    if(component){
+        exploreType(component.componentType)
+    }
 
     async function onclick(){
         await updateComponent(componentId)
