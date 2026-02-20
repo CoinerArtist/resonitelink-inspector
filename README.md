@@ -4,6 +4,8 @@ An external Resonite inspector using ResoniteLink. Try it yourself here : https:
 
 This is made using [ResoniteLinkTS](https://github.com/CoinerArtist/ResoniteLinkTS), my own Typescript wrapper for ResoniteLink.
 
+https://github.com/user-attachments/assets/ed238bfc-7dd6-4146-b619-bbeaca43289b
+
 (`/docs` is actually the build. Github only allows to serve `/` and `/docs` for some reason.)
 
 ## Usage
