@@ -1,6 +1,6 @@
 <script lang="ts">
     import { getTsTypeFromResoniteType, isNullableType } from "@coin/resonitelink-ts";
-    import type {boolean2, boolean3, boolean4, color, colorX, Field, FieldGeneric, number2, number2x2, number3, number3x3, number4, number4x4, numberQ, rect} from "@coin/resonitelink-ts"
+    import type {boolean2, boolean3, boolean4, BoundingBox, color, colorX, Field, FieldGeneric, number2, number2x2, number3, number3x3, number4, number4x4, numberQ, Rect} from "@coin/resonitelink-ts"
     import FieldNumber from "./Fields/FieldNumber.svelte";
     import FieldNumber3 from "./Fields/FieldNumber3.svelte";
     import FieldNumber2 from "./Fields/FieldNumber2.svelte";
@@ -20,6 +20,7 @@
     import FieldNumber3x3 from "./Fields/FieldNumber3x3.svelte";
     import FieldNumber4x4 from "./Fields/FieldNumber4x4.svelte";
     import FieldRect from "./Fields/FieldRect.svelte";
+    import FieldBoundingBox from "./Fields/FieldBoundingBox.svelte";
     const { data, changeField }: { data: Field, changeField: (data: Field) => void } = $props()
 
     const tsType = $derived(getTsTypeFromResoniteType(data.$type))
@@ -67,8 +68,11 @@
     <FieldStringNullable data={data as FieldGeneric<string, string|null>} {changeField}/>
 {:else if tsType === "string"}
     <FieldString data={data as FieldGeneric<string, string>} {changeField}/>
-{:else if tsType === "rect"}
-    <FieldRect data={data as FieldGeneric<string, rect>} {changeField}/>
+{:else if tsType === "Rect"}
+    <FieldRect data={data as FieldGeneric<string, Rect>} {changeField}/>
+{:else if tsType === "BoundingBox"}
+    <FieldBoundingBox data={data as FieldGeneric<string, BoundingBox>} {changeField}/>
+
 {:else}
-    <span class="type">{tsType}</span>
+    <span class="type">{tsType} : {data.$type}</span>
 {/if}

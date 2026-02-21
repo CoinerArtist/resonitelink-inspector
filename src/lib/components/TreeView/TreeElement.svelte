@@ -1,12 +1,17 @@
 <script lang="ts">
-    import { onDestroy, onMount } from "svelte";
     import { link, shared } from "$shared";
     import CheckBox from "$components/CheckBox.svelte";
     import TreeElement from "./TreeElement.svelte"
+    import { slots, updateSlot } from "$model";
+    import type { Slot } from "@coin/resonitelink-ts";
     let { slotId, unfolded = false, persistent = true, active = true }: { slotId: string, unfolded?: boolean, persistent?: boolean, active?: boolean } = $props()
 
+    // svelte-ignore state_referenced_locally
+    await updateSlot(slotId)
+    let slot: Slot = $derived(slots.get(slotId)!)
+
     async function fold(){
-        slot = (await link.getSlot(slotId)).data
+        await updateSlot(slotId)
         if((slot.children || []).length > 0){
             unfolded = !unfolded
         } else {
@@ -19,7 +24,7 @@
         const now = Date.now()
         if(now - lastClick > 500){
             lastClick = now
-            slot = (await link.getSlot(slotId)).data
+            await updateSlot(slotId)
             if(shared.resoniteLinkMode) console.log(`${slot.name.value} (${slotId})`, slot)
         } else {
             lastClick = 0
@@ -32,30 +37,9 @@
             id: slotId,
             isActive: slot.isActive
         }).finally(async () => {
-            slot = (await link.getSlot(slotId)).data
-            if(slotId === shared.selectedSlot){
-                shared.componentUpdate()
-            }
+            await updateSlot(slotId)
         })
     }
-
-    async function update(){
-        slot = (await link.getSlot(slotId)).data
-    }
-
-    // svelte-ignore state_referenced_locally
-    let slot = $state.raw((await link.getSlot(slotId)).data)
-
-    $effect(() => {
-        link.getSlot(slotId).then(x => slot = x.data)
-    })
-
-    onDestroy(() => {
-        shared.slotUpdate.delete(slotId)
-    })
-    onMount(() => {
-        shared.slotUpdate.set(slotId, update)
-    })
 
     const color = $derived(shared.selectedSlot == slotId ? "--heroYellow" : (persistent ? (slot.isPersistent.value ? "--light" : "--heroOrange") : "--midOrange"))
     const opacity = $derived(slot.isActive.value ? (active ? "1" : "0.7") : "0.5")
@@ -102,6 +86,7 @@
     }
 </style>
 
+{#if slot}
 <div>
     <div id="outer">
         <button onclick={fold}><div style="transform: {slot.children?.length ? "scale(1.4)" : "scale(2.3) translateY(-0.05em)"};">{slot.children?.length ? (unfolded ? "⯆" : "⯈") : "⏺"}</div></button>
@@ -117,3 +102,4 @@
         </div>
     {/if}
 </div>
+{/if}

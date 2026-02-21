@@ -11,14 +11,14 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^3.0.10",
-		"@sveltejs/kit": "^2.51.0",
+		"@sveltejs/kit": "^2.53.0",
 		"@sveltejs/vite-plugin-svelte": "6.2.4",
-		"svelte": "^5.51.0",
-		"svelte-check": "^4.4.0",
+		"svelte": "^5.53.0",
+		"svelte-check": "^4.4.3",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.1"
 	},
 	"dependencies": {
-		"@coin/resonitelink-ts": "jsr:^1.0.5"
+		"@coin/resonitelink-ts": "jsr:^1.0.6"
 	}
 }

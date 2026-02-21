@@ -1,10 +1,9 @@
 <script lang="ts">
-    import type { Member } from "@coin/resonitelink-ts";
+    import type { Member, Slot } from "@coin/resonitelink-ts";
     import { link, shared } from "$shared";
-    import { tryUpdate } from "$util";
     import MemberInput from "./MemberInput/MemberInput.svelte";
     import SlotComponent from "./SlotComponent.svelte";
-    import { onDestroy, onMount } from "svelte";
+    let { slotId = $bindable(null) }: { slotId?: string|null} = $props()
 
     import imgDestroy from "$assets/icon/Color_Destroy.svg"
     import imgDestroyPreservingAssets from "$assets/icon/Color_DestroyPreservingAssets.svg"
@@ -12,40 +11,58 @@
     import imgAddChild from "$assets/icon/Color_AddChild.svg"
     import imgDuplicate from "$assets/icon/Color_Duplicate.svg"
     import imgSetRoot from "$assets/icon/Color_SetRoot.svg"
+    import { slots, updateSlot, updateSlots } from "$model";
 
-    let {data: slot} = $derived((shared.selectedSlot === "" ? {data: null} : await link.getSlot(shared.selectedSlot)))
+    let slot: Slot|undefined|null = $derived(slotId === null ? undefined : slots.get(slotId))
+
+    $effect(() => {
+        if(shared.linkOpen && slotId){
+            updateSlot(slotId)
+        }
+    })
+
+    $effect(() => {
+        if(slot === null){
+            shared.sendNotification("Couldn't get selected slot.")
+            slotId = null
+        }
+    })
+
+    function update(){
+        if(slot){
+            updateSlot(slot.id)
+        }
+    }
 
     async function changeField(name: string|number, data: Member){
-        await link.updateSlot({
-            id: shared.selectedSlot,
-            [name]: data
-        })
-        slot = (await link.getSlot(shared.selectedSlot)).data
+        if(slot){
+            await link.updateSlot({
+                id: slot.id,
+                [name]: data
+            })
+            updateSlot(slot.id)
+        }
     }
 
     async function changeFieldDisplay(name: string|number, data: Member){
-        await changeField(name, data)
-        tryUpdate(shared.selectedSlot)
+        if(slot){
+            await changeField(name, data)
+            updateSlot(slot.id)
+        }
     }
 
     async function changeFieldParent(name: string|number, data: Member){
-        const parentId = slot!.parent.targetId
-        await changeField(name, data)
-        if(parentId) tryUpdate(parentId)
-        if(slot!.parent.targetId) tryUpdate(slot!.parent.targetId)
-        console.log(parentId)
+        if(slot){
+            const parentId = slot!.parent.targetId
+            await changeField(name, data)
+            if(parentId){
+                updateSlot(parentId)
+            }
+            if(slot!.parent.targetId){
+                updateSlot(slot!.parent.targetId)
+            }
+        }
     }
-
-    async function update(){
-        slot = (await link.getSlot(shared.selectedSlot)).data
-    }
-
-    onMount(() => {
-        shared.componentUpdate = update
-    })
-    onDestroy(() => {
-        shared.componentUpdate = () => {}
-    })
 
     function todo(){
         shared.sendNotification("This doesn't do anything (yet)")
@@ -55,8 +72,8 @@
         if(slot && slot.parent.targetId){
             const parent = slot.parent.targetId
             link.removeSlot(slot.id).then(() => {
-                slot = null
-                tryUpdate(parent)
+                slotId = null
+                updateSlot(parent)
             }).catch(e => {
                 shared.sendNotification("Failed to destroy.")
                 console.error(e)
@@ -87,8 +104,7 @@
             })
             .send()
             .then(() => {
-                update()
-                tryUpdate(parent)
+                updateSlots([slot.id, parent])
             }).catch(e => {
                 shared.sendNotification("Failed to insert parent.")
                 console.error(e)
@@ -96,24 +112,22 @@
         }
     }
 
-    function addChild(){
+    async function addChild(){
         if(slot){
             const id = slot.id
-            link.addSlot({ 
+            await link.addSlot({
                 parent: {targetId: slot.id},
                 name: {value: `${slot.name.value} - Child`},
                 tag: {value: slot.tag.value},
-            }).then(() => {
-                tryUpdate(id)
-            }).catch(e => {
-                shared.sendNotification("Failed to add child.")
-                console.error(e)
             })
+            updateSlot(id)
         }
     }
 
     function setRoot(){
-        shared.rootSlotId = shared.selectedSlot
+        if(slot){
+            shared.rootSlotId = slot.id
+        }
     }
 
     async function resetPosition(){
@@ -122,7 +136,7 @@
                 id: slot.id,
                 position: {value: {x: 0, y: 0, z: 0}}
             })
-            update()
+            updateSlot(slot.id)
         }
     }
     async function resetRotation(){
@@ -131,7 +145,7 @@
                 id: slot.id,
                 rotation: {value: {x: 0, y: 0, z: 0, w: 1}}
             })
-            update()
+            updateSlot(slot.id)
         }
     }
     async function resetScale(){
@@ -140,20 +154,20 @@
                 id: slot.id,
                 scale: {value: {x: 1, y: 1, z: 1}}
             })
-            update()
+            updateSlot(slot.id)
         }
     }
 
     async function parentUnderRoot(){
         if(slot && slot.parent.targetId){
             const parent = slot.parent.targetId
+
             await link.updateSlot({
                 id: slot.id,
                 parent: {targetId: "Root"}
             })
-            update()
-            tryUpdate("Root")
-            tryUpdate(parent)
+
+            updateSlots([slot.id, "Root", parent])
         }
     }
 </script>
@@ -225,12 +239,22 @@
         text-align: center;
     }
 
-
+    #name{
+        color: var(--currentColor);
+        -webkit-user-select:none; user-select:none;
+        flex-grow: 1;
+    }
+    #name:hover{
+        color: var(--heroYellow);
+    }
+    #name:active{
+        color: var(--heroPurple);
+    }
 </style>
 
 <div id="outer">
     <div id="topbar">
-        <div id="title">Slot: {slot ? slot.name.value : ""} {#if slot && shared.resoniteLinkMode}<span id="info">({shared.selectedSlot})</span>{/if}</div>
+        <div id="title">Slot: <span id="name" onclick={update}>{slot ? slot.name.value : ""}</span> {#if slot && shared.resoniteLinkMode}<span id="info">({slot.id})</span>{/if}</div>
         <button onclick={destroy}><img src={imgDestroy} title="Destroy"></button>
         <button onclick={todo}><img src={imgDestroyPreservingAssets} title="Destroy Preserving Assets"></button>
         <button onclick={insertParent}><img src={imgInsertParent} title="Insert Parent"></button>
