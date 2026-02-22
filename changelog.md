@@ -3,8 +3,7 @@
 ## v0.0.6
 - SyncObjects are displayed more compactly (VRIK no longer takes up the whole screen)
 - Fix: Number inputs used to complain about non-integer values when hovered
-- ...
-
+- Fix: Enums in syncObjects now are also dropdowns.
 
 ## v0.0.5
 - All enums should now use a dropdown menu. Their options are found using the Reflection API.

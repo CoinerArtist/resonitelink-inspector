@@ -1,5 +1,5 @@
 import { link } from "$shared";
-import type { Component, ComponentDefinition, MemberDefinition, Slot, SlotData, TypeReference } from "@coin/resonitelink-ts";
+import type { Component, ComponentDefinition, MemberDefinition, Slot, SlotData, SyncObjectDefinition, TypeReference } from "@coin/resonitelink-ts";
 import { SvelteMap } from "svelte/reactivity"
 
 // --- //
@@ -71,6 +71,17 @@ export async function updateComponentDefinition(componentType: string){
 
 // --- //
 
+export const syncObjectDefinitions = new SvelteMap<string, SyncObjectDefinition>()
+
+export async function updateSyncObjectDefinitions(objectType: string){
+    if(!syncObjectDefinitions.has(objectType)){
+        const res = await link.getSyncObjectDefinition(objectType, true)
+        syncObjectDefinitions.set(objectType, res.definition)
+    }
+}
+
+// --- //
+
 export const enumDefinitions = new SvelteMap<string, string[]>()
 const seen = new Set<string>()
 
@@ -100,6 +111,14 @@ export async function exploreType(typeName: string){
             const componentDef = componentDefinitions.get(genericTypeName)!
             
             for(const v of Object.values(componentDef.members)){
+                exploreMember(v)
+            }
+        } else if(typeDef.isSyncObject){
+            const genericTypeName = makeGenericType(typeName)
+            await updateSyncObjectDefinitions(genericTypeName)
+            const objectDef = syncObjectDefinitions.get(genericTypeName)!
+
+            for(const v of Object.values(objectDef.members)){
                 exploreMember(v)
             }
         } else if(typeDef.isEnum){
