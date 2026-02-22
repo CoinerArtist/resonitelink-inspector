@@ -1,5 +1,10 @@
 # changelog
 
+## v0.0.6
+- SyncObjects are displayed more compactly (VRIK no longer takes up the whole screen)
+- ...
+
+
 ## v0.0.5
 - All enums should now use a dropdown menu. Their options are found using the Reflection API.
 - Added BoundingBox and color32 fields.

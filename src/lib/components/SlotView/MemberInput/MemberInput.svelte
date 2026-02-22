@@ -6,7 +6,7 @@
     import SyncList from "./SyncList.svelte";
     import SyncObject from "./SyncObject.svelte";
     import TypeField from "./TypeField.svelte";
-    const { name, displayName = "", data, changeField, update }: { name: string|number, displayName?: string, data: Member, changeField: (name: string|number, data: Member) => void, update: () => void } = $props()
+    const { name, displayName = "", data, changeField, update, parentIsList = false }: { name: string|number, displayName?: string, data: Member, changeField: (name: string|number, data: Member) => void, update: () => void, parentIsList?: boolean } = $props()
 
     function change(dat: Member){
         changeField(name, dat)
@@ -20,6 +20,11 @@
 
 <style>
     #field{
+        display: flex;
+        gap: 0.3em;
+    }
+    #fieldWide{
+        grid-column: 1 / 3;
         display: flex;
         gap: 0.3em;
     }
@@ -54,7 +59,7 @@
     </span>
 {:else}
     <span id="title" {onclick}>{displayName || name}{#if shared.resoniteLinkMode}<span id="info">({data.id})</span>{/if}:</span>
-    <span id="field">
+    <span id={data.$type === "syncObject" && !parentIsList ? "fieldWide" : "field"}>
         {#if data.$type === "empty"}
             <span class="type">&lt;empty element&gt;</span>
         {:else if data.$type === "reference"}

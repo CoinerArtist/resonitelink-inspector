@@ -22,6 +22,6 @@
 
 <div id="outer">
     {#each data.elements.entries() as [k, elememt] (elememt.id)}
-        <MemberInput name={k} data={elememt} changeField={change} {update}/>
+        <MemberInput name={k} data={elememt} changeField={change} {update} parentIsList={true}/>
     {/each}
 </div>
