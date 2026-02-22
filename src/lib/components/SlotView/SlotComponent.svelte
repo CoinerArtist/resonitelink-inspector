@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ComponentDefinition, Member } from "@coin/resonitelink-ts";
+    import type { Member } from "@coin/resonitelink-ts";
     import { link, shared } from "$shared";
     import MemberInput from "./MemberInput/MemberInput.svelte";
     import { shortenType } from "$util";
@@ -9,8 +9,8 @@
     // svelte-ignore state_referenced_locally
     await updateComponent(componentId)
     let component = $derived(components.get(componentId))
+    let componentDef = $derived(component ? componentDefinitions.get(component.componentType) : undefined)
 
-    let componentDef: ComponentDefinition|undefined = $derived(component ? componentDefinitions.get(component.componentType) : undefined)
     // svelte-ignore state_referenced_locally
     if(component){
         exploreType(component.componentType)

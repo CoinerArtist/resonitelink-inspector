@@ -53,6 +53,6 @@
     <span><CheckBox bind:checked={shared.resoniteLinkMode} onclick={saveMode}/> ResoniteLink Info</span>
     <span id="version">
         <a id="readme" href="https://github.com/CoinerArtist/resonitelink-inspector">README.md</a>
-        <a id="changelog" href="https://github.com/CoinerArtist/resonitelink-inspector/blob/main/changelog.md">v0.0.5</a>
+        <a id="changelog" href="https://github.com/CoinerArtist/resonitelink-inspector/blob/main/changelog.md">v0.0.6</a>
     </span>
 </div>
