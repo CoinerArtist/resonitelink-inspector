@@ -18,13 +18,6 @@
     let component = $derived(components.get(componentId))
     let componentDef = $derived(component ? componentDefinitions.get(component.componentType) : undefined)
 
-    // svelte-ignore state_referenced_locally
-    if(component){
-        exploreType(component.componentType)
-    }
-
-
-
     async function onclick(){
         await updateComponent(componentId)
         if(shared.resoniteLinkMode && component) console.log(`${shortenType(component.componentType)}(${componentId})`, component)

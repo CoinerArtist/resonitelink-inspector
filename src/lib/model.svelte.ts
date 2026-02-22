@@ -9,6 +9,12 @@ export const slots = new SvelteMap<string, Slot|null>()
 export function updateSlot(id: string){
     return link.getSlot(id)
     .then(x => {
+        if(!slots.has(id)){
+            for(const v of Object.values(x.data.components || [])){
+                exploreType(v.componentType)
+            }
+        }
+
         slots.set(id, x.data)
         return x.data
     })

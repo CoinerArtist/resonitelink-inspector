@@ -1,7 +1,8 @@
 # changelog
 
 ## v0.0.7
-- Component can now be folded
+- Components can now be folded
+- Component definitions are explored before a slot is selected 
 
 ## v0.0.6
 - SyncObjects are displayed more compactly (VRIK no longer takes up the whole screen)
