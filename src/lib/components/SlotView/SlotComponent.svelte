@@ -1,15 +1,16 @@
 <script lang="ts">
-    import type { Member } from "@coin/resonitelink-ts";
+    import type { ComponentDefinition, Member } from "@coin/resonitelink-ts";
     import { link, shared } from "$shared";
     import MemberInput from "./MemberInput/MemberInput.svelte";
     import { shortenType } from "$util";
-    import { components, exploreType, updateComponent } from "$model";
+    import { componentDefinitions, components, exploreType, updateComponent } from "$model";
     const { componentId }: { componentId: string } = $props()
 
     // svelte-ignore state_referenced_locally
     await updateComponent(componentId)
     let component = $derived(components.get(componentId))
 
+    let componentDef: ComponentDefinition|undefined = $derived(component ? componentDefinitions.get(component.componentType) : undefined)
     // svelte-ignore state_referenced_locally
     if(component){
         exploreType(component.componentType)
@@ -61,7 +62,7 @@
 
 {#if component}
     <div id="title" {onclick}>
-        {shortenType(component.componentType)}
+        {componentDef ? componentDef.type.name : shortenType(component.componentType)}
         {#if shared.resoniteLinkMode}<span id="info">({component.id})</span>{/if}
     </div>
 
