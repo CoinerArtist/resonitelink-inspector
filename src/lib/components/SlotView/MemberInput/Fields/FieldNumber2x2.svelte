@@ -23,7 +23,7 @@
 </style>
 
 <div id="outer">
-    <div><input type="number" bind:value={localData.value.m00} {onchange}> <input type="number" bind:value={localData.value.m01} {onchange}></div>
-    <div><input type="number" bind:value={localData.value.m10} {onchange}> <input type="number" bind:value={localData.value.m11} {onchange}></div>
+    <div><input type="number" step="any" bind:value={localData.value.m00} {onchange}> <input type="number" step="any" bind:value={localData.value.m01} {onchange}></div>
+    <div><input type="number" step="any" bind:value={localData.value.m10} {onchange}> <input type="number" step="any" bind:value={localData.value.m11} {onchange}></div>
 </div>
 

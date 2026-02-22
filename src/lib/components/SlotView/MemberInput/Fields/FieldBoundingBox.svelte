@@ -9,9 +9,9 @@
     }
 </script>
 
-x <input type="number" bind:value={localData.value.min.x} {onchange}>
-y <input type="number" bind:value={localData.value.min.y} {onchange}>
-z <input type="number" bind:value={localData.value.min.z} {onchange}>
-x <input type="number" bind:value={localData.value.max.x} {onchange}>
-y <input type="number" bind:value={localData.value.max.y} {onchange}>
-z <input type="number" bind:value={localData.value.max.z} {onchange}>
+x <input type="number" step="any" bind:value={localData.value.min.x} {onchange}>
+y <input type="number" step="any" bind:value={localData.value.min.y} {onchange}>
+z <input type="number" step="any" bind:value={localData.value.min.z} {onchange}>
+x <input type="number" step="any" bind:value={localData.value.max.x} {onchange}>
+y <input type="number" step="any" bind:value={localData.value.max.y} {onchange}>
+z <input type="number" step="any" bind:value={localData.value.max.z} {onchange}>

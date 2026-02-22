@@ -31,10 +31,10 @@
     }
 </style>
 
-R <input type="number" bind:value={localData.value.r} {onchange}>
-G <input type="number" bind:value={localData.value.g} {onchange}>
-B <input type="number" bind:value={localData.value.b} {onchange}>
-A <input type="number" bind:value={localData.value.a} {onchange}>
+R <input type="number" step="any" bind:value={localData.value.r} {onchange}>
+G <input type="number" step="any" bind:value={localData.value.g} {onchange}>
+B <input type="number" step="any" bind:value={localData.value.b} {onchange}>
+A <input type="number" step="any" bind:value={localData.value.a} {onchange}>
 <span id="outer">
     <span style="background-color: rgb({toPercent(localData.value.r)}% {toPercent(localData.value.g)}% {toPercent(localData.value.b)}%)"></span>
     <span id="transparentbg">

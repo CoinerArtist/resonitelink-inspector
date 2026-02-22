@@ -23,8 +23,8 @@
 </style>
 
 <div id="outer">
-    <div><input type="number" bind:value={localData.value.m00} {onchange}> <input type="number" bind:value={localData.value.m01} {onchange}> <input type="number" bind:value={localData.value.m02} {onchange}></div>
-    <div><input type="number" bind:value={localData.value.m10} {onchange}> <input type="number" bind:value={localData.value.m11} {onchange}> <input type="number" bind:value={localData.value.m12} {onchange}></div>
-    <div><input type="number" bind:value={localData.value.m20} {onchange}> <input type="number" bind:value={localData.value.m21} {onchange}> <input type="number" bind:value={localData.value.m22} {onchange}></div>
+    <div><input type="number" step="any" bind:value={localData.value.m00} {onchange}> <input type="number" step="any" bind:value={localData.value.m01} {onchange}> <input type="number" step="any" bind:value={localData.value.m02} {onchange}></div>
+    <div><input type="number" step="any" bind:value={localData.value.m10} {onchange}> <input type="number" step="any" bind:value={localData.value.m11} {onchange}> <input type="number" step="any" bind:value={localData.value.m12} {onchange}></div>
+    <div><input type="number" step="any" bind:value={localData.value.m20} {onchange}> <input type="number" step="any" bind:value={localData.value.m21} {onchange}> <input type="number" step="any" bind:value={localData.value.m22} {onchange}></div>
 </div>
 

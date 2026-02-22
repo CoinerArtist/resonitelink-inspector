@@ -9,4 +9,4 @@
     }
 </script>
 
-<input type="number" bind:value={localData.value} {onchange}>
+<input type="number" step="any" bind:value={localData.value} {onchange}>

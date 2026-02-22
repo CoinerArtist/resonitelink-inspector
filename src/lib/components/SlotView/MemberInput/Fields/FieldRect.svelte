@@ -9,7 +9,7 @@
     }
 </script>
 
-x <input type="number" bind:value={localData.value.position.x} {onchange}>
-y <input type="number" bind:value={localData.value.position.y} {onchange}>
-x <input type="number" bind:value={localData.value.size.x} {onchange}>
-y <input type="number" bind:value={localData.value.size.y} {onchange}>
+x <input type="number" step="any" bind:value={localData.value.position.x} {onchange}>
+y <input type="number" step="any" bind:value={localData.value.position.y} {onchange}>
+x <input type="number" step="any" bind:value={localData.value.size.x} {onchange}>
+y <input type="number" step="any" bind:value={localData.value.size.y} {onchange}>
