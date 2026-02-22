@@ -1,5 +1,8 @@
 # changelog
 
+## v0.0.7
+- Component can now be folded
+
 ## v0.0.6
 - SyncObjects are displayed more compactly (VRIK no longer takes up the whole screen)
 - Fix: Number inputs used to complain about non-integer values when hovered

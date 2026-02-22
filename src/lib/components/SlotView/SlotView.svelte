@@ -17,6 +17,7 @@
 
     $effect(() => {
         if(shared.linkOpen && slotId){
+            unfolded = true
             updateSlot(slotId)
         }
     })
@@ -170,6 +171,8 @@
             updateSlots([slot.id, "Root", parent])
         }
     }
+
+    let unfolded = $state(true)
 </script>
 
 <style>
@@ -250,6 +253,11 @@
     #name:active{
         color: var(--heroPurple);
     }
+
+    .spacer{
+        grid-column: 1 / 3;
+        height: 0.3em;
+    }
 </style>
 
 <div id="outer">
@@ -300,9 +308,16 @@
                 <button onclick={todo}>Local User Space</button>
                 <button onclick={parentUnderRoot}>World Root</button>
             </div>
+            
+            <div class="wide" style="display: grid; grid-template-columns: 1fr 1fr; gap: round(0.3em, 1px)">
+                <button onclick={() => unfolded = false}>Fold All</button>
+                <button onclick={() => unfolded = true}>Unfold All</button>
+            </div>
+            
+            <div class="spacer"></div>
     
             {#each (slot.components || []) as component (component.id)}
-                <SlotComponent componentId={component.id} />
+                <SlotComponent componentId={component.id} {unfolded}/>
             {/each}
         {/if}
     </div>
